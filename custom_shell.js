@@ -5,12 +5,14 @@ let fileNames = [];
 const rm = function (args) {
   if (!fileNames.includes(args[0])) {
     console.log('No such file exits');
-    return;
+    return 0;
   }
 
   fileNames = fileNames.filter((element) => {
     return element === args[0] ? '' : element;
   });
+
+  return 0;
 };
 
 const ls = function () {
@@ -19,6 +21,7 @@ const ls = function () {
 
 const touch = function (args) {
   fileNames.push(args[0]);
+  return 0;
 };
 
 const cdBack = function () {
@@ -26,17 +29,17 @@ const cdBack = function () {
 
   if (memory.length < 1) {
     currDir = '/';
-    return;
+    return 0;
   }
 
   currDir = memory.at(-1);
-  return;
+  return 0;
 };
 
 const cdHome = function () {
   memory.splice(0);
   currDir = '~';
-  return;
+  return 0;
 };
 
 const cd = function (args) {
@@ -50,7 +53,7 @@ const cd = function (args) {
 
   memory.push(args);
   currDir = args;
-  return;
+  return 0;
 };
 
 const echo = function (args) {
@@ -59,7 +62,7 @@ const echo = function (args) {
 
 const runCommands = function (command, args) {
   if (command === '') {
-    return;
+    return 0;
   }
 
   switch (command) {
@@ -78,7 +81,7 @@ while (true) {
   const runningCommand = prompt(displayText);
   const [command, ...args] = runningCommand.split(' ');
   const message = runCommands(command, args);
-  if (message) {
+  if (message !== 0) {
     console.log(message);
   }
 }
